@@ -106,7 +106,6 @@ public class KioskModeActivity extends Activity {
             mKioskPackages = new ArrayList<>();
             for (String pkg : packageArray) {
                 if (pkg.equals(LauncherPackageString)) {
-                    Log.d("RJM", "Found launcher - auto launching");
                     foundLauncher = true;
                     mKioskPackages.add(pkg);
                 }
@@ -128,10 +127,14 @@ public class KioskModeActivity extends Activity {
         mKioskPackages.add(getPackageName());
 
         if (foundLauncher) {
+            Log.d("RJM", "Found launcher and auto-starting");
             useLauncher = true;
-            return;
         } else if (packageArray == null) {
-            useLauncher = true;
+            Log.d("RJM", "No package array");
+            // useLauncher = true;
+        }
+
+        if (useLauncher) {
             return;
         }
 
@@ -179,7 +182,7 @@ public class KioskModeActivity extends Activity {
     public void onBackdoorClicked() {
         stopLockTask();
 
-        if (true) {
+        if (false) {
             startLockTask();
             return;
         }
