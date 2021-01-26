@@ -75,6 +75,10 @@ public class KioskModeActivity extends Activity {
     public static final String LOCKED_APP_PACKAGE_LIST
             = "com.afwsamples.testdpc.policy.locktask.LOCKED_APP_PACKAGE_LIST";
 
+    private static final String LauncherPackageString = "com.mirror.launcher";
+    private static boolean foundLauncher = false;
+    private static boolean useLauncher = false;
+
     private static final String[] KIOSK_USER_RESTRICTIONS = {
             DISALLOW_SAFE_BOOT,
             DISALLOW_FACTORY_RESET,
@@ -101,7 +105,11 @@ public class KioskModeActivity extends Activity {
         if (packageArray != null) {
             mKioskPackages = new ArrayList<>();
             for (String pkg : packageArray) {
-                mKioskPackages.add(pkg);
+                if (pkg.equals(LauncherPackageString)) {
+                    Log.d("RJM", "Found launcher - auto launching");
+                    foundLauncher = true;
+                    mKioskPackages.add(pkg);
+                }
             }
             mKioskPackages.remove(getPackageName());
             mKioskPackages.add(getPackageName());
@@ -118,6 +126,14 @@ public class KioskModeActivity extends Activity {
         // remove TestDPC package and add to end of list; it will act as back door
         mKioskPackages.remove(getPackageName());
         mKioskPackages.add(getPackageName());
+
+        if (foundLauncher) {
+            useLauncher = true;
+            return;
+        } else if (packageArray == null) {
+            useLauncher = true;
+            return;
+        }
 
         // create list view with all kiosk packages
         final KioskAppsArrayAdapter kioskAppsArrayAdapter = new KioskAppsArrayAdapter(this,
@@ -151,10 +167,23 @@ public class KioskModeActivity extends Activity {
                 startLockTask();
             }
         }
+
+        if (useLauncher) {
+            PackageManager pm = getPackageManager();
+            Intent launchAppIntent;
+            launchAppIntent = pm.getLaunchIntentForPackage(LauncherPackageString);
+            startActivity(launchAppIntent);
+        }
     }
 
     public void onBackdoorClicked() {
         stopLockTask();
+
+        if (true) {
+            startLockTask();
+            return;
+        }
+
         setDefaultKioskPolicies(false);
         mDevicePolicyManager.clearPackagePersistentPreferredActivities(mAdminComponentName,
                 getPackageName());
