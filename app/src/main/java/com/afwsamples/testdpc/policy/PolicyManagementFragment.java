@@ -1157,6 +1157,7 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
                 setKeyGuardDisabled(false);
                 return true;
             case START_KIOSK_MODE:
+                /*
                 showManageLockTaskListPrompt(R.string.kiosk_select_title,
                         new ManageLockTaskListCallback() {
                             @Override
@@ -1165,6 +1166,9 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
                             }
                         }
                 );
+                */
+                String[] justLauncherTask = {KioskModeActivity.LauncherPackageString};
+                startKioskMode(justLauncherTask);
                 return true;
             case CAPTURE_IMAGE_KEY:
                 dispatchCaptureIntent(MediaStore.ACTION_IMAGE_CAPTURE,

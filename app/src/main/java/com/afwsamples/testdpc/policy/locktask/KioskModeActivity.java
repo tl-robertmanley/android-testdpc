@@ -75,9 +75,9 @@ public class KioskModeActivity extends Activity {
     public static final String LOCKED_APP_PACKAGE_LIST
             = "com.afwsamples.testdpc.policy.locktask.LOCKED_APP_PACKAGE_LIST";
 
-    private static final String LauncherPackageString = "com.mirror.launcher";
+    public static final String LauncherPackageString = "com.mirror.launcher";
     private static boolean foundLauncher = false;
-    private static boolean useLauncher = false;
+    private static boolean autoStartLauncher = false;
 
     private static final String[] KIOSK_USER_RESTRICTIONS = {
             DISALLOW_SAFE_BOOT,
@@ -128,13 +128,12 @@ public class KioskModeActivity extends Activity {
 
         if (foundLauncher) {
             Log.d("RJM", "Found launcher and auto-starting");
-            useLauncher = true;
+            // autoStartLauncher = true;
         } else if (packageArray == null) {
             Log.d("RJM", "No package array");
-            // useLauncher = true;
         }
 
-        if (useLauncher) {
+        if (autoStartLauncher) {
             return;
         }
 
@@ -171,7 +170,7 @@ public class KioskModeActivity extends Activity {
             }
         }
 
-        if (useLauncher) {
+        if (autoStartLauncher) {
             PackageManager pm = getPackageManager();
             Intent launchAppIntent;
             launchAppIntent = pm.getLaunchIntentForPackage(LauncherPackageString);
