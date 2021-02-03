@@ -879,7 +879,7 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
         loadSeparateChallenge();
         reloadAffiliatedApis();
 
-        attemptToStartKioskMode(); // RJM:HERE:TESTME
+        // attemptToStartKioskMode(); // RJM:HERE:TESTME
     }
 
     @Override

@@ -32,6 +32,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -44,6 +45,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.afwsamples.testdpc.DeviceAdminReceiver;
 import com.afwsamples.testdpc.PolicyManagementActivity;
 import com.afwsamples.testdpc.R;
@@ -131,6 +134,9 @@ public class KioskModeActivity extends Activity {
             // autoStartLauncher = true;
         } else if (packageArray == null) {
             Log.d("RJM", "No package array");
+            if (validateApplicationInstalled(LauncherPackageString)) {
+                autoStartLauncher = true;
+            }
         }
 
         if (autoStartLauncher) {
@@ -258,6 +264,46 @@ public class KioskModeActivity extends Activity {
             }
         }
     }
+
+    // RJM:HERE:TESTME
+    private boolean validateApplicationInstalled(String appName) {
+        Intent launcherIntent = Util.getLauncherIntent(this);
+        final List<ResolveInfo> primaryUserAppList = mPackageManager
+                .queryIntentActivities(launcherIntent, 0);
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory(Intent.CATEGORY_HOME);
+        final ResolveInfo defaultLauncher = mPackageManager.resolveActivity(homeIntent, 0);
+        if (primaryUserAppList.isEmpty()) {
+            showToast("No apps installed!");
+            return false;
+        }
+        boolean foundApplication = false;
+        for (ResolveInfo testInfo: primaryUserAppList) {
+            String testName = testInfo.activityInfo.packageName;
+            if (testName.contains(appName)) {
+                foundApplication = true;
+                break;
+            }
+        }
+        if (!foundApplication) {
+            showToast("Error: " + appName + " not installed!");
+            return false;
+        }
+        return true;
+    }
+
+    private void showToast(String msg) {
+        showToast(msg, Toast.LENGTH_SHORT);
+    }
+
+    private void showToast(String msg, int duration) {
+        Activity activity = this;
+        if (activity == null || activity.isFinishing()) {
+            return;
+        }
+        Toast.makeText(activity, msg, duration).show();
+    }
+
 
     private class KioskAppsArrayAdapter extends ArrayAdapter<String> implements
             AdapterView.OnItemClickListener {
