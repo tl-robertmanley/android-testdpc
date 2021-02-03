@@ -37,6 +37,7 @@ import android.util.Log;
 import android.widget.Toast;
 import com.afwsamples.testdpc.common.NotificationUtil;
 import com.afwsamples.testdpc.common.Util;
+import com.afwsamples.testdpc.policy.PolicyManagementFragment;
 import com.afwsamples.testdpc.provision.PostProvisioningTask;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -62,6 +63,8 @@ public class DeviceAdminReceiver extends android.app.admin.DeviceAdminReceiver {
 
     public static final String ACTION_PASSWORD_REQUIREMENTS_CHANGED =
             "com.afwsamples.testdpc.policy.PASSWORD_REQUIREMENTS_CHANGED";
+    public static final String ACTION_START_KIOSK_MODE =
+            "com.afwsamples.testdpc.policy.START_KIOSK_MODE";
 
     private static final String LOGS_DIR = "logs";
 
@@ -83,6 +86,9 @@ public class DeviceAdminReceiver extends android.app.admin.DeviceAdminReceiver {
                 break;
             case DevicePolicyManager.ACTION_DEVICE_OWNER_CHANGED:
                 onDeviceOwnerChanged(context);
+                break;
+            case ACTION_START_KIOSK_MODE:
+                // RJM:HERE:DOME
                 break;
             default:
                super.onReceive(context, intent);

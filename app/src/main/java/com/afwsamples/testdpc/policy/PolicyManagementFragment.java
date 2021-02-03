@@ -327,7 +327,7 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
     private static final String START_USER_IN_BACKGROUND_KEY = "start_user_in_background";
     private static final String STOP_USER_KEY = "stop_user";
     private static final String LOGOUT_USER_KEY = "logout_user";
-    private static final String ENABLE_LOGOUT_KEY ="enable_logout";
+    private static final String ENABLE_LOGOUT_KEY = "enable_logout";
     private static final String SET_USER_SESSION_MESSAGE_KEY = "set_user_session_message";
     private static final String AFFILIATED_USER_KEY = "affiliated_user";
     private static final String EPHEMERAL_USER_KEY = "ephemeral_user";
@@ -382,7 +382,7 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
     private static final String SECURITY_PATCH_FORMAT = "yyyy-MM-dd";
     private static final String SET_NEW_PASSWORD = "set_new_password";
     private static final String SET_NEW_PASSWORD_WITH_COMPLEXITY =
-        "set_new_password_with_complexity";
+            "set_new_password_with_complexity";
     private static final String SET_PROFILE_PARENT_NEW_PASSWORD = "set_profile_parent_new_password";
     private static final String BIND_DEVICE_ADMIN_POLICIES = "bind_device_admin_policies";
     private static final String CROSS_PROFILE_APPS = "cross_profile_apps";
@@ -408,29 +408,30 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
 
     private static final String BATTERY_PLUGGED_ANY = Integer.toString(
             BatteryManager.BATTERY_PLUGGED_AC |
-            BatteryManager.BATTERY_PLUGGED_USB |
-            BatteryManager.BATTERY_PLUGGED_WIRELESS);
+                    BatteryManager.BATTERY_PLUGGED_USB |
+                    BatteryManager.BATTERY_PLUGGED_WIRELESS);
     private static final String DONT_STAY_ON = "0";
 
     private static final int USER_OPERATION_ERROR_UNKNOWN = 1;
     private static final int USER_OPERATION_SUCCESS = 0;
 
     private static final SparseIntArray PASSWORD_COMPLEXITY = new SparseIntArray(4);
+
     static {
         if (Util.SDK_INT >= Q_VERSION_CODE) {
             final int[] complexityIds = new int[]{
-                DevicePolicyManager.PASSWORD_COMPLEXITY_NONE,
-                DevicePolicyManager.PASSWORD_COMPLEXITY_LOW,
-                DevicePolicyManager.PASSWORD_COMPLEXITY_MEDIUM,
-                DevicePolicyManager.PASSWORD_COMPLEXITY_HIGH
+                    DevicePolicyManager.PASSWORD_COMPLEXITY_NONE,
+                    DevicePolicyManager.PASSWORD_COMPLEXITY_LOW,
+                    DevicePolicyManager.PASSWORD_COMPLEXITY_MEDIUM,
+                    DevicePolicyManager.PASSWORD_COMPLEXITY_HIGH
             };
 
             // Strings to show for each password complexity setting.
             final int[] complexityNames = new int[]{
-                R.string.password_complexity_none,
-                R.string.password_complexity_low,
-                R.string.password_complexity_medium,
-                R.string.password_complexity_high
+                    R.string.password_complexity_none,
+                    R.string.password_complexity_low,
+                    R.string.password_complexity_medium,
+                    R.string.password_complexity_high
             };
             for (int i = 0; i < complexityIds.length; i++) {
                 PASSWORD_COMPLEXITY.put(complexityIds[i], complexityNames[i]);
@@ -610,15 +611,15 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
         findPreference(WIPE_DATA_KEY).setOnPreferenceClickListener(this);
         findPreference(REMOVE_DEVICE_OWNER_KEY).setOnPreferenceClickListener(this);
         mEnableBackupServicePreference = (DpcSwitchPreference) findPreference(
-            ENABLE_BACKUP_SERVICE);
+                ENABLE_BACKUP_SERVICE);
         mEnableBackupServicePreference.setOnPreferenceChangeListener(this);
         mEnableBackupServicePreference.setCustomConstraint(this::validateDeviceOwnerBeforeQ);
         mCommonCriteriaModePreference = (DpcSwitchPreference) findPreference(
-            COMMON_CRITERIA_MODE_KEY);
+                COMMON_CRITERIA_MODE_KEY);
         mCommonCriteriaModePreference.setOnPreferenceChangeListener(this);
         findPreference(REQUEST_BUGREPORT_KEY).setOnPreferenceClickListener(this);
         mEnableSecurityLoggingPreference =
-            (SwitchPreference) findPreference(ENABLE_SECURITY_LOGGING);
+                (SwitchPreference) findPreference(ENABLE_SECURITY_LOGGING);
         mEnableSecurityLoggingPreference.setOnPreferenceChangeListener(this);
         mRequestSecurityLogsPreference = (DpcPreference) findPreference(REQUEST_SECURITY_LOGS);
         mRequestSecurityLogsPreference.setOnPreferenceClickListener(this);
@@ -635,9 +636,9 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
         mRequestNetworkLogsPreference = (DpcPreference) findPreference(REQUEST_NETWORK_LOGS);
         mRequestNetworkLogsPreference.setOnPreferenceClickListener(this);
         mRequestNetworkLogsPreference.setCustomConstraint(
-            () -> isNetworkLoggingEnabled()
-                ? NO_CUSTOM_CONSTRIANT
-                : R.string.requires_network_logs);
+                () -> isNetworkLoggingEnabled()
+                        ? NO_CUSTOM_CONSTRIANT
+                        : R.string.requires_network_logs);
         findPreference(SET_ACCESSIBILITY_SERVICES_KEY).setOnPreferenceClickListener(this);
         findPreference(SET_INPUT_METHODS_KEY).setOnPreferenceClickListener(this);
         findPreference(SET_NOTIFICATION_LISTENERS_KEY).setOnPreferenceClickListener(this);
@@ -650,7 +651,7 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
         findPreference(BLOCK_UNINSTALLATION_LIST_KEY).setOnPreferenceClickListener(this);
         findPreference(APP_FEEDBACK_NOTIFICATIONS).setOnPreferenceChangeListener(this);
         mEnableAppFeedbackNotificationsPreference =
-            (DpcSwitchPreference) findPreference(APP_FEEDBACK_NOTIFICATIONS);
+                (DpcSwitchPreference) findPreference(APP_FEEDBACK_NOTIFICATIONS);
         findPreference(ENABLE_SYSTEM_APPS_KEY).setOnPreferenceClickListener(this);
         findPreference(ENABLE_SYSTEM_APPS_BY_PACKAGE_NAME_KEY).setOnPreferenceClickListener(this);
         findPreference(ENABLE_SYSTEM_APPS_BY_INTENT_KEY).setOnPreferenceClickListener(this);
@@ -696,8 +697,8 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
                 INSTALL_NONMARKET_APPS_KEY);
         mInstallNonMarketAppsPreference.setCustomConstraint(
                 () -> (mUserManager.hasUserRestriction(DISALLOW_INSTALL_UNKNOWN_SOURCES) ||
-                    mUserManager.hasUserRestriction(
-                        UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES_GLOBALLY))
+                        mUserManager.hasUserRestriction(
+                                UserManager.DISALLOW_INSTALL_UNKNOWN_SOURCES_GLOBALLY))
                         ? R.string.user_restricted
                         : NO_CUSTOM_CONSTRIANT);
         mInstallNonMarketAppsPreference.setOnPreferenceChangeListener(this);
@@ -748,11 +749,11 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
         mSetAutoTimeZonePreference.setOnPreferenceChangeListener(this);
 
         mSetDeviceOrganizationNamePreference =
-        (EditTextPreference) findPreference(SET_DEVICE_ORGANIZATION_NAME_KEY);
+                (EditTextPreference) findPreference(SET_DEVICE_ORGANIZATION_NAME_KEY);
         mSetDeviceOrganizationNamePreference.setOnPreferenceChangeListener(this);
 
         mSetLocationEnabledPreference = (DpcSwitchPreference) findPreference(
-            SET_LOCATION_ENABLED_KEY);
+                SET_LOCATION_ENABLED_KEY);
         mSetLocationEnabledPreference.setOnPreferenceChangeListener(this);
 
         mSetLocationModePreference = (DpcSwitchPreference) findPreference(SET_LOCATION_MODE_KEY);
@@ -792,7 +793,7 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
         if (mProfileMaxTimeOff.isEnabled()) {
             final String currentValueAsString = Long.toString(
                     TimeUnit.MILLISECONDS.toSeconds(
-                        mDevicePolicyManager.getManagedProfileMaximumTimeOff(mAdminComponentName)));
+                            mDevicePolicyManager.getManagedProfileMaximumTimeOff(mAdminComponentName)));
             mProfileMaxTimeOff.setText(currentValueAsString);
             mProfileMaxTimeOff.setSummary(currentValueAsString);
         }
@@ -814,7 +815,7 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
 
     private void onCreateSetNewPasswordWithComplexityPreference() {
         ListPreference complexityPref =
-            (ListPreference) findPreference(SET_NEW_PASSWORD_WITH_COMPLEXITY);
+                (ListPreference) findPreference(SET_NEW_PASSWORD_WITH_COMPLEXITY);
         List<CharSequence> entries = new ArrayList<>();
         List<CharSequence> values = new ArrayList<>();
         int size = PASSWORD_COMPLEXITY.size();
@@ -841,8 +842,8 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
      */
     private void maybeDisableLockTaskPreferences() {
         if (Util.SDK_INT < VERSION_CODES.O) {
-            String[] lockTaskPreferences = { MANAGE_LOCK_TASK_LIST_KEY,
-                    CHECK_LOCK_TASK_PERMITTED_KEY, START_LOCK_TASK, STOP_LOCK_TASK };
+            String[] lockTaskPreferences = {MANAGE_LOCK_TASK_LIST_KEY,
+                    CHECK_LOCK_TASK_PERMITTED_KEY, START_LOCK_TASK, STOP_LOCK_TASK};
             for (String preference : lockTaskPreferences) {
                 ((DpcPreferenceBase) findPreference(preference))
                         .setAdminConstraint(DpcPreferenceHelper.ADMIN_DEVICE_OWNER);
@@ -877,6 +878,8 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
         loadPasswordComplexity();
         loadSeparateChallenge();
         reloadAffiliatedApis();
+
+        attemptToStartKioskMode(); // RJM:HERE:TESTME
     }
 
     @Override
@@ -1157,19 +1160,7 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
                 setKeyGuardDisabled(false);
                 return true;
             case START_KIOSK_MODE:
-                /*
-                showManageLockTaskListPrompt(R.string.kiosk_select_title,
-                        new ManageLockTaskListCallback() {
-                            @Override
-                            public void onPositiveButtonClicked(String[] lockTaskArray) {
-                                startKioskMode(lockTaskArray);
-                            }
-                        }
-                );
-                */
-                String[] justLauncherTask = {KioskModeActivity.LauncherPackageString};
-                startKioskMode(justLauncherTask);
-                return true;
+                return attemptToStartKioskMode();  // RJM:HERE:TESTME
             case CAPTURE_IMAGE_KEY:
                 dispatchCaptureIntent(MediaStore.ACTION_IMAGE_CAPTURE,
                         CAPTURE_IMAGE_REQUEST_CODE, mImageUri);
@@ -1281,9 +1272,20 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
                 .setPositiveButton(
                         R.string.install_update_prompt_yes, (dialogInterface, i) -> installUpdate())
                 .setNegativeButton(
-                        R.string.install_update_prompt_no, (dialogInterface, i) -> {})
+                        R.string.install_update_prompt_no, (dialogInterface, i) -> {
+                        })
                 .create()
                 .show();
+    }
+
+    // RJM:HERE: new function
+    public boolean attemptToStartKioskMode() {
+        if (!validateApplicationInstalled(KioskModeActivity.LauncherPackageString)) {
+            return false;
+        }
+        String[] justLauncherTask = {KioskModeActivity.LauncherPackageString};
+        startKioskMode(justLauncherTask);
+        return true;
     }
 
     @TargetApi(Q_VERSION_CODE)
@@ -1719,6 +1721,37 @@ public class PolicyManagementFragment extends BaseSearchablePolicyPreferenceFrag
                             })
                     .show();
         }
+    }
+
+    // RJM:HERE:TESTME
+    private boolean validateApplicationInstalled(String appName) {
+        if (getActivity() == null || getActivity().isFinishing()) {
+            return false;
+        }
+        Intent launcherIntent = Util.getLauncherIntent(getActivity());
+        final List<ResolveInfo> primaryUserAppList = mPackageManager
+                .queryIntentActivities(launcherIntent, 0);
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory(Intent.CATEGORY_HOME);
+        final ResolveInfo defaultLauncher = mPackageManager.resolveActivity(homeIntent, 0);
+        if (primaryUserAppList.isEmpty()) {
+            showToast(R.string.no_primary_app_available);
+            return false;
+
+        }
+        boolean foundLauncher = false;
+        for (ResolveInfo testInfo: primaryUserAppList) {
+            String testName = testInfo.activityInfo.packageName;
+            if (testName.contains(appName)) {
+                foundLauncher = true;
+                break;
+            }
+        }
+        if (!foundLauncher) {
+            showToast(R.string.no_primary_app_available);
+            return false;
+        }
+        return true;
     }
 
     /**
