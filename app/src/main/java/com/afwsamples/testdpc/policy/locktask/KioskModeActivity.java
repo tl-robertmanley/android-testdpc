@@ -131,7 +131,7 @@ public class KioskModeActivity extends Activity {
 
         if (foundLauncher) {
             Log.d("RJM", "Found launcher and auto-starting");
-            // autoStartLauncher = true;
+            // autoStartLauncher = true; // RJM:HERE:AUTO-START
         } else if (packageArray == null) {
             Log.d("RJM", "No package array");
             if (validateApplicationInstalled(LauncherPackageString)) {
